@@ -81,8 +81,8 @@ def add_entry():
     if not notes_in:
         notes_in = ' '
     # Creates a list of fields for the new entry
-    row = [date_in, title_in, time_spent_in, notes_in],
-    ENTRY.new_entry(row, 0)
+    rows = [date_in, title_in, time_spent_in, notes_in],
+    ENTRY.new_entry(rows, 0)
     clear()
     print(txt[0]['saved'])
 
