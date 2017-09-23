@@ -1,1 +1,1 @@
-# Work_Log
+# User friendly work log
