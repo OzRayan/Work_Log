@@ -1,0 +1,42 @@
+menu,sub_menu,entries,must,date,error,title,time,notes,saved,edit,no_task,exact,start,no_pattern,end,result,regex,edit_notes,choose,deleted
+"WORK LOG
+
+Choose your action!
+[a] Add new task
+[b] Search
+[c] Quit program
+>
+
+","Choose your search option!
+[a] Exact date
+[b] Range of dates
+[c] Exact search
+[d] Regex pattern
+[e] Return to menu
+>","Date: {}
+Title: {}
+Time spent: {}
+Notes: {}
+","You must fill this field!
+","Enter date (use DD/MM/YYYY format!)[Q]
+>","Enter a valid date!
+","Enter task name
+>","Enter time spent (use just integers!)
+>","Enter additional notes (Optional!)
+>","The new task was successfully saved!
+","If you let the field empty it will save the old one!
+Old {}
+{}
+","Task not found! Please try again.
+","Enter text
+>","Enter start date (use DD/MM/YYYY format!)
+","Pattern doesn't exist! Please try again.
+","Enter end date (use DD/MM/YYYY format!)
+","Result {} of {}
+","Enter pattern
+>","If you let the field empty it will save it EMPTY!
+Old {}
+{}
+","Choose from the available letters!
+","Task successfully deleted!
+It will return to search menu!"
