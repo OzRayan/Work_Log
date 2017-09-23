@@ -19,8 +19,10 @@ sub_menu = 'Choose your search option!\n' \
 choose = "Choose from the available letters!\n"
 exact = 'Enter text\n' \
         '>'
-start = 'Enter start date (use DD/MM/YYYY format!)\n'
-end = 'Enter end date (use DD/MM/YYYY format!)\n'
+start = 'Enter start date (use DD/MM/YYYY format!)\n' \
+        '>'
+end = 'Enter end date (use DD/MM/YYYY format!)\n' \
+      '>'
 regex = 'Enter pattern\n' \
         '>'
 entries = 'Date: {}\n' \
@@ -41,9 +43,9 @@ notes = 'Enter additional notes (Optional!)\n' \
 deleted = 'Task successfully deleted!\n' \
           'It will return to search menu!'
 saved = 'The new task was successfully saved!\n'
-edit = 'If you let the field empty it will save the old one!\n' \
-       'Old {}\n' \
-       '{}\n'
+edit = "You can't let this field empty!\n" \
+       "Old {}\n" \
+       "{}\n"
 edit_notes = 'If you let the field empty it will save it EMPTY!\n' \
              'Old {}\n' \
              '{}\n'
