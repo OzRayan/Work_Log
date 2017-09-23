@@ -117,7 +117,7 @@ def edit_task(entry_data, poz):
             new_title = entry_data[poz][1]
         clear()
         print(txt[0]['edit'].format('Time spent', entry_data[poz][2]))
-        new_time = input(txt[0]['time'])
+        new_time = add_time()
         if not new_time:
             new_time = entry_data[poz][2]
         clear()
@@ -155,7 +155,7 @@ def search_entry(action):
         if action == 'a':
             try:
                 entry = input(txt[0]['date']).strip()
-                if entry == 'q':
+                if entry.lower() == 'q':
                     clear()
                     break
                 d, m, y = tuple(entry.split('/'))
@@ -174,13 +174,13 @@ def search_entry(action):
             clear()
             try:
                 print(txt[0]['start'])
-                start = input("Start: ")
+                start = input("Start: ").strip()
                 if start.lower() == 'q':
                     clear()
                     break
                 clear()
                 print(txt[0]['end'])
-                end = input('End: ')
+                end = input('End: ').strip()
                 if end.lower() == 'q':
                     clear()
                     break
@@ -281,11 +281,14 @@ def result_menu(entry):
             clear()
             index -= 1
         if action == 'd':
-            clear()
-            ENTRY.delete(entry[index])
-            clear()
-            print(txt[0]['deleted'])
-            break
+            answer = input("Are you sure?\n> [Y]es [N]o")
+            if answer.lower() == 'y':
+                ENTRY.delete(entry[index])
+                entry.pop(index)
+                if index == len(entry):
+                    index -= 1
+                clear()
+                print(txt[0]['deleted'])
         if action == 'e':
             clear()
             edit_task(entry, index)
