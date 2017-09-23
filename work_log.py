@@ -16,13 +16,13 @@ def clear():
     return os.system('cls' if os.name == 'nt' else 'clear')
 
 
-def add_date():
+def add_date(prompt):
     """Date input with ValueError exception
     Makes sure that there is an input."""
     while True:
         clear()
         try:
-            date_in = input(txt[0]['date'])
+            date_in = input(prompt)
             if date_in.lower() == 'q':
                 break
             d, m, y = tuple(date_in.split('/'))
@@ -73,7 +73,7 @@ def add_time():
 def add_entry():
     """Add new task to the csv file """
     clear()
-    date_in = add_date()
+    date_in = add_date(txt[0]['date'])
     title_in = add_title()
     time_spent_in = add_time()
     clear()
@@ -103,38 +103,23 @@ def edit_task(entry_data, poz):
     Replace the old data with the new input or old data"""
     clear()
     print(txt[0]['edit'].format('Date', entry_data[poz][0]))
-    try:
-        new_date = input(txt[0]['date']).strip()
-        if not new_date:
-            # Creates readable data for the edit() method
-            y, m, d = tuple(entry_data[poz][0].split('-'))
-            old_date = '/'.join(list((d, m, y)))
-            new_date = old_date
-        clear()
-        print(txt[0]['edit'].format('Task name', entry_data[poz][1]))
-        new_title = input(txt[0]['title']).strip()
-        if not new_title:
-            new_title = entry_data[poz][1]
-        clear()
-        print(txt[0]['edit'].format('Time spent', entry_data[poz][2]))
-        new_time = add_time()
-        if not new_time:
-            new_time = entry_data[poz][2]
-        clear()
-        print(txt[0]['edit_notes'].format('Notes', entry_data[poz][3]))
-        new_notes = input(txt[0]['notes'])
-        if not new_notes:
-            new_notes = ' '
-        print(txt[0]['saved'])
-        d, m, y = tuple(new_date.split('/'))
-        date_in = datetime.date(year=int(y), month=int(m), day=int(d))
-        new = [date_in, new_title, new_time, new_notes]
-        ENTRY.edit(new, entry_data[poz])
-        entry_data.pop(poz)
-        entry_data.insert(poz, new)
-    except ValueError:
-        clear()
-        print(txt[0]['error'])
+    new_date = add_date(txt[0]['date'])
+    clear()
+    print(txt[0]['edit'].format('Task name', entry_data[poz][1]))
+    new_title = add_title()
+    clear()
+    print(txt[0]['edit'].format('Time spent', entry_data[poz][2]))
+    new_time = add_time()
+    clear()
+    print(txt[0]['edit_notes'].format('Notes', entry_data[poz][3]))
+    new_notes = input(txt[0]['notes'])
+    if not new_notes:
+        new_notes = ' '
+    print(txt[0]['saved'])
+    new = [new_date, new_title, new_time, new_notes]
+    ENTRY.edit(new, entry_data[poz])
+    entry_data.pop(poz)
+    entry_data.insert(poz, new)
 
 
 def get_range(items):
@@ -153,57 +138,32 @@ def search_entry(action):
     clear()
     while True:
         if action == 'a':
-            try:
-                entry = input(txt[0]['date']).strip()
-                if entry.lower() == 'q':
-                    clear()
-                    break
-                d, m, y = tuple(entry.split('/'))
-                out = datetime.date(year=int(y), month=int(m), day=int(d))
-                date_data = ENTRY.search(str(out), 'date')
-                if not date_data:
-                    clear()
-                    print(txt[0]['no_task'])
-                    break
-                else:
-                    return result_menu(date_data)
-            except ValueError:
+            date_in = add_date(txt[0]['date'])
+            date_data = ENTRY.search(str(date_in), 'date')
+            if not date_data:
                 clear()
-                print(txt[0]['error'])
+                print(txt[0]['no_task'])
+                break
+            else:
+                return result_menu(date_data)
         if action == 'b':
             clear()
-            try:
-                print(txt[0]['start'])
-                start = input("Start: ").strip()
-                if start.lower() == 'q':
-                    clear()
-                    break
+            start = add_date(txt[0]['start'])
+            clear()
+            end = add_date(txt[0]['end'])
+            day = datetime.timedelta(days=1)
+            days = end - start + day
+            date_list = []
+            while days:
+                date_list.append(ENTRY.search(str(start), 'date'))
+                start += day
+                days -= day
+            if not date_list:
                 clear()
-                print(txt[0]['end'])
-                end = input('End: ').strip()
-                if end.lower() == 'q':
-                    clear()
-                    break
-                day = datetime.timedelta(days=1)
-                d, m, y = tuple(start.split('/'))
-                d2, m2, y2 = tuple(end.split('/'))
-                start_date = datetime.date(year=int(y), month=int(m), day=int(d))
-                end_date = datetime.date(year=int(y2), month=int(m2), day=int(d2))
-                days = end_date - start_date + day
-                date_list = []
-                while days:
-                    date_list.append(ENTRY.search(str(start_date), 'date'))
-                    start_date += day
-                    days -= day
-                if not date_list:
-                    clear()
-                    print(txt[0]['no_task'])
-                    break
-                else:
-                    return result_menu(get_range(date_list))
-            except ValueError:
-                clear()
-                print(txt[0]['error'])
+                print(txt[0]['no_task'])
+                break
+            else:
+                return result_menu(get_range(date_list))
         if action == 'c':
             clear()
             entry = input(txt[0]['title']).strip()
@@ -298,14 +258,14 @@ def result_menu(entry):
 def menu():
     """Main loop"""
     while True:
-        menu = input(txt[0]['menu'])
+        main_menu = input(txt[0]['menu'])
         if menu in ['c', 'q']:
             print('Session finished!')
             break
-        if menu == 'a':
+        if main_menu == 'a':
             clear()
             add_entry()
-        elif menu == 'b':
+        elif main_menu == 'b':
             clear()
             search_menu()
         else:
