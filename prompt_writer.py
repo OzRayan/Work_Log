@@ -40,8 +40,7 @@ title = 'Enter task name\n' \
         '>'
 notes = 'Enter additional notes (Optional!)\n' \
         '>'
-deleted = 'Task successfully deleted!\n' \
-          'It will return to search menu!'
+deleted = 'Task successfully deleted!\n''
 saved = 'The new task was successfully saved!\n'
 edit = "You can't let this field empty!\n" \
        "Old {}\n" \
