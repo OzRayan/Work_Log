@@ -259,7 +259,7 @@ def menu():
     """Main loop"""
     while True:
         main_menu = input(txt[0]['menu'])
-        if menu in ['c', 'q']:
+        if main_menu in ['c', 'q']:
             print('Session finished!')
             break
         if main_menu == 'a':
