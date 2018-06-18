@@ -4,6 +4,7 @@ import csv
 
 from entry import Entry
 
+
 with open('prompt.csv', newline='') as csvfile:
     data = csv.DictReader(csvfile, delimiter=',')
     txt = list(data)
